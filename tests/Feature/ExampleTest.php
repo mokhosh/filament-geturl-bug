@@ -45,3 +45,19 @@ it('fails returning proper login links when authenticated', function () {
             "http://filament-geturl-bug.test/user",
         ]);
 });
+
+it('returns proper ids even when authenticated', function () {
+    be(User::factory()->create());
+    $roles = ['admin', 'editor', 'user'];
+
+    foreach ($roles as $role) {
+        $ids[] = Filament::getPanel($role)->getId();
+    }
+
+    expect($ids)
+        ->toBe([
+            "admin",
+            "editor",
+            "user",
+        ]);
+});
